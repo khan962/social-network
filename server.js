@@ -4,6 +4,8 @@ const app = express();
 //dsb connection
 const connectDB = require("./config/db");
 connectDB();
+//json perser/body parser
+app.use(express.json({ extended: false }));
 
 app.get("/", (req, res) => res.send("App running"));
 const PORT = process.env.PORT || 5000;

@@ -1,6 +1,64 @@
 const express = require("express");
 const router = express.Router();
+const { check, validationResult } = require("express-validator");
+const User = require("../../models/User");
+const gravatar = require("gravatar");
+const bcrypt = require("bcryptjs");
 
-router.get("/", (req, res) => res.send("user router"));
+router.post(
+  "/",
+  [
+    check("name", "Name is required").not().isEmpty(),
+    check("email", "Use a valid email").isEmail(),
+    check("password", "Use a strong password").isLength({ min: 6 }),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    //console.log(req.body);
+    try {
+      //if user exist
+      const { name, email, password } = req.body;
+      let user = await User.findOne({ email });
+      if (user) {
+        return res.status(400).json({
+          errors: [
+            {
+              msg: "email already used",
+            },
+          ],
+        });
+      }
+
+      //get users avatar
+      const avatar = gravatar.url(email, {
+        s: "200",
+        r: "pg",
+        d: "mm",
+      });
+
+      //user decliar
+      user = new User({
+        name,
+        email,
+        password,
+        avatar,
+      });
+
+      //encrypt password
+      const salt = bcrypt.genSaltSync(10);
+      user.password = await bcrypt.hash(password, salt);
+
+      //save the record into database
+      await user.save();
+      res.send("user registered");
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("internal server error");
+    }
+  }
+);
 
 module.exports = router;
