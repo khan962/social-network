@@ -1,3 +1,4 @@
 {
-    "mongoURI" : "mongodb+srv://khan962:962632.Khan@cluster0.biwqv.mongodb.net/social-network?retryWrites=true&w=majority"
+    "mongoURI" : "mongodb+srv://khan962:962632.Khan@cluster0.biwqv.mongodb.net/social-network?retryWrites=true&w=majority",
+    "secretToken":"aftabKhan123"
 }
