@@ -1,4 +1,6 @@
 {
     "mongoURI" : "mongodb+srv://khan962:962632.Khan@cluster0.biwqv.mongodb.net/social-network?retryWrites=true&w=majority",
-    "secretToken":"aftabKhan123"
+    "secretToken":"aftabKhan123",
+    "githubClientId": "541db0e5546d29f4e3ab",
+    "githubSecret": "6447a15f556ce5d92745ff4b85aa9483a23e96f6"
 }
