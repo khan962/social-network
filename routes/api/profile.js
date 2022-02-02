@@ -3,6 +3,8 @@ const { check, validationResult } = require("express-validator");
 const router = express.Router();
 const auth = require("../../middleware/auth");
 const Profile = require("../../models/Profile");
+const config = require("config");
+const request = require("request");
 
 // @route   GET /api/profile/me
 // @desc    GET users profile
@@ -242,11 +244,13 @@ router.put(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { school, degree, from, to, current, description } = req.body;
+    const { school, degree, fieldofstudy, from, to, current, description } =
+      req.body;
 
     const newEdu = {
       school,
       degree,
+      fieldofstudy,
       from,
       to,
       current,
