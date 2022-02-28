@@ -16,6 +16,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import "./App.css";
+import AddExperience from "./components/profile-forms/AddExperience";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -59,6 +60,15 @@ const App = () => {
             element={
               <PrivateRoute>
                 <EditProfile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            exact
+            path="/add-experience"
+            element={
+              <PrivateRoute>
+                <AddExperience />
               </PrivateRoute>
             }
           />
