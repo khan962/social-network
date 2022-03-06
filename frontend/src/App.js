@@ -17,6 +17,7 @@ import store from "./store";
 
 import "./App.css";
 import AddExperience from "./components/profile-forms/AddExperience";
+import AddEducation from "./components/profile-forms/AddEducation";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -69,6 +70,15 @@ const App = () => {
             element={
               <PrivateRoute>
                 <AddExperience />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            exact
+            path="/add-education"
+            element={
+              <PrivateRoute>
+                <AddEducation />
               </PrivateRoute>
             }
           />

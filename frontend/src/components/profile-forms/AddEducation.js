@@ -1,63 +1,66 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { addExperience } from "../../actions/profile";
 import { connect } from "react-redux";
+import { addEducation } from "../../actions/profile";
 
-const AddExperience = ({ addExperience }) => {
-  const [formData, setFormData] = React.useState({
-    title: "",
-    company: "",
-    location: "",
+const AddEducation = ({ addEducation }) => {
+  // const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    school: "",
+    degree: "",
+    fieldofstudy: "",
     from: "",
     to: "",
-    current: "",
+    current: false,
     description: "",
   });
 
-  const { title, company, location, from, to, current, description } = formData;
-  const [toDateDisabled, toggleDisabled] = React.useState(false);
+  const [toDateDisabled, toggleDisabled] = useState(false);
+  const { school, degree, fieldofstudy, from, to, current, description } =
+    formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    addExperience(formData);
-  };
   return (
     <section className="container">
-      <h1 className="large text-primary">Add An Experience</h1>
+      <h1 className="large text-primary">Add Your Education</h1>
       <p className="lead">
-        <i className="fas fa-code-branch"></i> Add any developer/programming
-        positions that you have had in the past
+        <i className="fas fa-code-branch"></i> Add aany school that you have
+        attended
       </p>
       <small>* = required field</small>
-      <form className="form" onSubmit={(e) => onSubmit(e)}>
+      <form
+        className="form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          addEducation(formData);
+        }}
+      >
         <div className="form-group">
           <input
             type="text"
-            placeholder="* Job Title"
-            name="title"
-            value={title}
+            placeholder="* School Name"
+            name="school"
+            value={school}
             onChange={(e) => onChange(e)}
           />
         </div>
         <div className="form-group">
           <input
             type="text"
-            placeholder="* Company"
-            name="company"
-            value={company}
+            placeholder="* Degree"
+            name="degree"
+            value={degree}
             onChange={(e) => onChange(e)}
           />
         </div>
         <div className="form-group">
           <input
             type="text"
-            placeholder="Location"
-            name="location"
-            value={location}
+            placeholder="Field of study"
+            name="fieldofstudy"
+            value={fieldofstudy}
             onChange={(e) => onChange(e)}
           />
         </div>
@@ -77,11 +80,7 @@ const AddExperience = ({ addExperience }) => {
               name="current"
               value={current}
               onChange={(e) => {
-                setFormData({
-                  ...formData,
-                  current: !current,
-                  to: "",
-                });
+                setFormData({ ...formData, current: !current });
                 toggleDisabled(!toDateDisabled);
               }}
               checked={current}
@@ -118,4 +117,4 @@ const AddExperience = ({ addExperience }) => {
   );
 };
 
-export default connect(null, { addExperience })(AddExperience);
+export default connect(null, { addEducation })(AddEducation);
