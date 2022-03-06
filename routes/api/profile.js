@@ -1,10 +1,15 @@
 const express = require("express");
-const { check, validationResult } = require("express-validator");
+const request = require("request");
+const { check, validationResult, body } = require("express-validator");
+const config = require("config");
+const { status } = require("express/lib/response");
 const router = express.Router();
 const auth = require("../../middleware/auth");
+
 const Profile = require("../../models/Profile");
-const config = require("config");
-const request = require("request");
+const User = require("../../models/User");
+const Post = require("../../models/Post");
+// const { response } = require("express");
 
 // @route   GET /api/profile/me
 // @desc    GET users profile
@@ -30,7 +35,6 @@ router.get("/me", auth, async (req, res) => {
 // @route   POST /api/profile
 // @desc    Create or update user profile
 // @access  Private
-
 router.post(
   "/",
   [
@@ -147,6 +151,9 @@ router.get("/user/:user_id", async (req, res) => {
 // @access  Private
 router.delete("/", auth, async (req, res) => {
   try {
+    // Remove posts
+    // await Post.deleteMany({ user: req.user.id });
+
     // Remove profile
     await Profile.findOneAndRemove({ user: req.user.id });
 
@@ -235,8 +242,8 @@ router.put(
     auth,
     check("school", "School is required").not().isEmpty(),
     check("degree", "Degree is required").not().isEmpty(),
-    check("from", "From date is required").not().isEmpty(),
     check("fieldofstudy", "Field of study is required").not().isEmpty(),
+    check("from", "From date is required").not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -256,6 +263,8 @@ router.put(
       current,
       description,
     };
+
+    console.log(newEdu);
 
     try {
       const profile = await Profile.findOne({ user: req.user.id });

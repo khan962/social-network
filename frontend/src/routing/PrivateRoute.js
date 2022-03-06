@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ children, auth: { isAuthenticated } }) => {
-  return isAuthenticated ? children : <Navigate to="/login" />;
+	return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth,
+	auth: state.auth,
 });
 
 export default connect(mapStateToProps)(PrivateRoute);
