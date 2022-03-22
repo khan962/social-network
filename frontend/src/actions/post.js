@@ -5,7 +5,7 @@ import { setAlert } from "./alert";
 // Get posts
 export const getPosts = () => async (dispatch) => {
   try {
-    const res = await axios.get("/api/posts");
+    const res = await axios.get("/api/post");
 
     dispatch({
       type: GET_POSTS,
@@ -24,7 +24,7 @@ export const getPosts = () => async (dispatch) => {
 // Add like
 export const addLike = (postId) => async (dispatch) => {
   try {
-    const res = await axios.put(`/api/posts/like/${postId}`);
+    const res = await axios.put(`/api/post/like/${postId}`);
 
     dispatch({
       type: UPDATE_LIKE,
@@ -44,7 +44,7 @@ export const addLike = (postId) => async (dispatch) => {
 // Remove like
 export const removeLike = (postId) => async (dispatch) => {
   try {
-    const res = await axios.put(`/api/posts/unlike/${postId}`);
+    const res = await axios.put(`/api/post/unlike/${postId}`);
     dispatch({
       type: UPDATE_LIKE,
       payload: { postId, likes: res.data },
@@ -63,7 +63,7 @@ export const removeLike = (postId) => async (dispatch) => {
 // Delete post
 export const deletePost = (postId) => async (dispatch) => {
   try {
-    const res = await axios.delete(`/api/posts/${postId}`);
+    const res = await axios.delete(`/api/post/${postId}`);
     dispatch({
       type: DELETE_POST,
       payload: postId,
